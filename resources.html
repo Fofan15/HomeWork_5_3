@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Resources</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const cardsPerPage = 3; // Change this value to set the number of cards per page
+          const cardRow = document.getElementById("card-row");
+          const previousBtn = document.getElementById("previous-btn");
+          const nextBtn = document.getElementById("next-btn");
+          const paginationLinks = document.querySelectorAll(
+            ".pagination a[data-page]"
+          );
+          
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        const dropdownToggle = document.querySelector('.dropdown-toggle');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        const nameField = document.querySelector('#name');
+        const yearField = document.querySelector('#year');
+        const colorField = document.querySelector('#color');
+        const pantoneValueField = document.querySelector('#pantone-value');
+
+        dropdownItems.forEach(item => {
+          item.addEventListener('click', event => {
+            const itemId = event.target.getAttribute('data-id');
+            const selectedItem = dataMap[itemId];
+
+            nameField.value = selectedItem.name;
+            yearField.value = selectedItem.year;
+            colorField.value = selectedItem.color;
+            pantoneValueField.value = selectedItem.pantone_value;
+          });
+        });
+
+        const data = [
+            {
+              "id": 1,
+              "name": "Cerulean",
+              "year": 2000,
+              "color": "#98B2D1",
+              "pantone_value": "15-4020"
+            },
+            {
+              "id": 2,
+              "name": "Fuchsia rose",
+              "year": 2001,
+              "color": "#C74375",
+              "pantone_value": "17-2031"
+            },
+            {
+              "id": 3,
+              "name": "True red",
+              "year": 2002,
+              "color": "#BF1932",
+              "pantone_value": "19-1664"
+            },
+            {
+              "id": 4,
+              "name": "Aqua sky",
+              "year": 2003,
+              "color": "#7BC4C4",
+              "pantone_value": "14-4811"
+            },
+            {
+              "id": 5,
+              "name": "Tigerlily",
+              "year": 2004,
+              "color": "#E2583E",
+              "pantone_value": "17-1456"
+            },
+            {
+              "id": 6,
+              "name": "Blue turquoise",
+              "year": 2005,
+              "color": "#53B0AE",
+              "pantone_value": "15-5217"
+            }
+          ];
+
+          const dataMap = {};
+          data.forEach((item) => {
+            dataMap[item.id] = item;
+          });
+
+          dropdownMenu.addEventListener('click', (event) => {
+            // Збережіть текст вибраного елемента в змінній
+            const selectedText = event.target.textContent;
+            
+            // Оновіть текст кнопки dropdown-toggle
+            dropdownToggle.textContent = selectedText;
+          });
+
+          let currentPage = 1;
+          let totalPages = Math.ceil(cardRow.children.length / cardsPerPage);
+  
+          function updatePagination() {
+            paginationLinks.forEach((link) =>
+              link.parentElement.classList.remove("active")
+            );
+            paginationLinks[currentPage - 1].parentElement.classList.add(
+              "active"
+            );
+  
+            if (currentPage === 1) {
+              previousBtn.classList.add("disabled");
+            } else {
+              previousBtn.classList.remove("disabled");
+            }
+  
+            if (currentPage === totalPages) {
+              nextBtn.classList.add("disabled");
+            } else {
+              nextBtn.classList.remove("disabled");
+            }
+          }
+  
+          function showCards() {
+            for (let i = 0; i < cardRow.children.length; i++) {
+              if (
+                i < (currentPage - 1) * cardsPerPage ||
+                i >= currentPage * cardsPerPage
+              ) {
+                cardRow.children[i].classList.add("d-none");
+              } else {
+                cardRow.children[i].classList.remove("d-none");
+              }
+            }
+          }
+  
+          previousBtn.addEventListener("click", () => {
+            if (currentPage > 1) {
+              currentPage--;
+              updatePagination();
+              showCards();
+            }
+          });
+  
+          nextBtn.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+              currentPage++;
+              updatePagination();
+              showCards();
+            }
+          });
+  
+          paginationLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+              event.preventDefault();
+              currentPage = parseInt(event.target.dataset.page);
+              updatePagination();
+              showCards();
+            });
+          });
+  
+          updatePagination();
+          showCards();
+        });
+      </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="logo.png"
+            alt=""
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          My website
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Users</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="resources.html">Resources</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-3">
+      <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            data-bs-toggle="tab"
+            data-bs-target="#tab-home"
+          >
+            Data
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-bs-toggle="tab"
+            data-bs-target="#tab-profile"
+          >
+            Input
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-home">
+          <div class="row" id="card-row">
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/98b2d1.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Cerulean</h5>
+                  <p class="card-text">Id: 1</p>
+                  <p class="card-text">Color: "#98B2D1"</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/c74375.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Fuchsia rose</h5>
+                  <p class="card-text">Id: 2</p>
+                  <p class="card-text">Color: "#C74375"</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/bf1932.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">True red</h5>
+                  <p class="card-text">Id: 3</p>
+                  <p class="card-text">Color: "#BF1932"</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/7bc4c4.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Aqua sky</h5>
+                  <p class="card-text">Id: 4</p>
+                  <p class="card-text">Color: "#7BC4C4"</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/e2583e.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Tigerlily</h5>
+                  <p class="card-text">Id: 5</p>
+                  <p class="card-text">Color: "#E2583E"</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                <img
+                  src="https://www.colorhexa.com/53b0ae.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Blue turquoise</h5>
+                  <p class="card-text">Id: 6</p>
+                  <p class="card-text">Color: "#53B0AE"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav>
+            <ul class="pagination justify-content-center mt-3">
+              <li class="page-item disabled" id="previous-btn">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#" data-page="1">1</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" data-page="2">2</a>
+              </li>
+              <li class="page-item" id="next-btn">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="tab-pane fade" id="tab-profile">
+          <form class="needs-validation">
+            <div class="mb-3">
+              <label for="name" class="form-label">Id</label>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Виберіть Id
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" data-id="1">1</a>
+                  <a class="dropdown-item" href="#" data-id="2">2</a>
+                  <a class="dropdown-item" href="#" data-id="3">3</a>
+                  <a class="dropdown-item" href="#" data-id="4">4</a>
+                  <a class="dropdown-item" href="#" data-id="5">5</a>
+                  <a class="dropdown-item" href="#" data-id="6">6</a>
+                </div>
+              </div>
+            </div> 
+              <div class="mb-3 mt-3">
+                <label for="name">Назва:</label>
+                <input type="text" id="name" readonly>
+              </div>
+              
+              <div class="mb-3 mt-3">
+                <label for="year">Рік:</label>
+                <input type="text" id="year" readonly>
+              </div>
+              
+              <div class="mb-3 mt-3">
+                <label for="color">Колір:</label>
+                <input type="text" id="color" readonly>
+              </div>
+              
+              <div class="mb-3 mt-3">
+                <label for="pantone-value">Значення Pantone:</label>
+                <input type="text" id="pantone-value" readonly>
+              </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
