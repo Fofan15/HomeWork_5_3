@@ -17,84 +17,6 @@
           const paginationLinks = document.querySelectorAll(
             ".pagination a[data-page]"
           );
-          
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-        const dropdownToggle = document.querySelector('.dropdown-toggle');
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
-        const nameField = document.querySelector('#name');
-        const yearField = document.querySelector('#year');
-        const colorField = document.querySelector('#color');
-        const pantoneValueField = document.querySelector('#pantone-value');
-
-        dropdownItems.forEach(item => {
-          item.addEventListener('click', event => {
-            const itemId = event.target.getAttribute('data-id');
-            const selectedItem = dataMap[itemId];
-
-            nameField.value = selectedItem.name;
-            yearField.value = selectedItem.year;
-            colorField.value = selectedItem.color;
-            pantoneValueField.value = selectedItem.pantone_value;
-          });
-        });
-
-        const data = [
-            {
-              "id": 1,
-              "name": "Cerulean",
-              "year": 2000,
-              "color": "#98B2D1",
-              "pantone_value": "15-4020"
-            },
-            {
-              "id": 2,
-              "name": "Fuchsia rose",
-              "year": 2001,
-              "color": "#C74375",
-              "pantone_value": "17-2031"
-            },
-            {
-              "id": 3,
-              "name": "True red",
-              "year": 2002,
-              "color": "#BF1932",
-              "pantone_value": "19-1664"
-            },
-            {
-              "id": 4,
-              "name": "Aqua sky",
-              "year": 2003,
-              "color": "#7BC4C4",
-              "pantone_value": "14-4811"
-            },
-            {
-              "id": 5,
-              "name": "Tigerlily",
-              "year": 2004,
-              "color": "#E2583E",
-              "pantone_value": "17-1456"
-            },
-            {
-              "id": 6,
-              "name": "Blue turquoise",
-              "year": 2005,
-              "color": "#53B0AE",
-              "pantone_value": "15-5217"
-            }
-          ];
-
-          const dataMap = {};
-          data.forEach((item) => {
-            dataMap[item.id] = item;
-          });
-
-          dropdownMenu.addEventListener('click', (event) => {
-            // Збережіть текст вибраного елемента в змінній
-            const selectedText = event.target.textContent;
-            
-            // Оновіть текст кнопки dropdown-toggle
-            dropdownToggle.textContent = selectedText;
-          });
 
           let currentPage = 1;
           let totalPages = Math.ceil(cardRow.children.length / cardsPerPage);
@@ -329,41 +251,40 @@
         <div class="tab-pane fade" id="tab-profile">
           <form class="needs-validation">
             <div class="mb-3">
-              <label for="name" class="form-label">Id</label>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Виберіть Id
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" data-id="1">1</a>
-                  <a class="dropdown-item" href="#" data-id="2">2</a>
-                  <a class="dropdown-item" href="#" data-id="3">3</a>
-                  <a class="dropdown-item" href="#" data-id="4">4</a>
-                  <a class="dropdown-item" href="#" data-id="5">5</a>
-                  <a class="dropdown-item" href="#" data-id="6">6</a>
-                </div>
-              </div>
-            </div> 
-              <div class="mb-3 mt-3">
-                <label for="name">Назва:</label>
-                <input type="text" id="name" readonly>
-              </div>
-              
-              <div class="mb-3 mt-3">
-                <label for="year">Рік:</label>
-                <input type="text" id="year" readonly>
-              </div>
-              
-              <div class="mb-3 mt-3">
-                <label for="color">Колір:</label>
-                <input type="text" id="color" readonly>
-              </div>
-              
-              <div class="mb-3 mt-3">
-                <label for="pantone-value">Значення Pantone:</label>
-                <input type="text" id="pantone-value" readonly>
-              </div>
-            
+              <label for="colorName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="colorName" required />
+              <div class="invalid-feedback">Please provide a name.</div>
+            </div>
+            <div class="mb-3">
+              <label for="year" class="form-label">Year</label>
+              <input
+                type="text"
+                class="form-control"
+                id="year"
+                required
+              />
+              <div class="invalid-feedback">Please provide a year.</div>
+            </div>
+            <div class="mb-3">
+              <label for="color" class="form-label">Color</label>
+              <input
+                type="color"
+                class="form-control"
+                id="resourceColor"
+                required
+              />
+              <div class="invalid-feedback">Please provide a color.</div>
+            </div>
+            <div class="mb-3">
+              <label for="pantoneValue" class="form-label">Pantone value </label>
+              <input
+                type="text"
+                class="form-control"
+                id="pantoneValue"
+                required
+              />
+              <div class="invalid-feedback">Please provide a pantone value.</div>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
